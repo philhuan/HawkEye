@@ -2,6 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.hfut.hawk_eye.mapper.UserMapper">
 
+    <sql id="table">t_user</sql>
+    <sql id="selectFields">uid, username,password</sql>
+    <sql id="insertFields">username,password</sql>
+
     <resultMap id="BaseResultMap" type="edu.hfut.hawk_eye.entity.User">
         <result column="uid" jdbcType="INTEGER" property="id" />
         <result column="username" jdbcType="VARCHAR" property="userName" />
@@ -9,7 +13,40 @@
     </resultMap>
 
     <select id="getUser" resultType="edu.hfut.hawk_eye.entity.User" resultMap="BaseResultMap">
-        SELECT * FROM t_user WHERE username = #{userName} AND password = #{password}
+        SELECT
+        *
+        FROM
+        <include refid="table"/>
+         WHERE username = #{userName} AND password = #{password}
     </select>
+
+    <insert id="addUser" parameterType="edu.hfut.hawk_eye.entity.User">
+        INSERT INTO
+        <include refid="table"></include>
+        (
+        <include refid="insertFields"/>
+        )
+        VALUES (#{userName},#{password})
+    </insert>
+
+    <update id="updatePwd">
+        UPDATE
+        <include refid="table"></include>
+        SET password = #{repassword}
+        WHERE uid = #{userid}
+    </update>
+
+    <select id="getUsers" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM
+        <include refid="table"/>
+    </select>
+
+    <delete id="deleteUser" >
+        DELETE FROM
+        <include refid="table"></include>
+         WHERE uid = #{id}
+    </delete>
 
 </mapper>

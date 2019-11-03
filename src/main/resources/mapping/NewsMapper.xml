@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.hfut.hawk_eye.mapper.NewsMapper">
+
+    <sql id="table">t_news</sql>
+    <sql id="selectFields">news_id,title,content,pub_time,uid</sql>
+    <sql id="insertFields">title,content,pub_time,uid</sql>
+
+    <resultMap id="BaseResultMap" type="edu.hfut.hawk_eye.entity.News">
+        <result column="news_id" jdbcType="INTEGER" property="id" />
+        <result column="title" jdbcType="VARCHAR" property="title" />
+        <result column="content" jdbcType="VARCHAR" property="content" />
+        <result column="uid" jdbcType="INTEGER" property="userId" />
+        <result column="pub_time" jdbcType="DATE" property="pubTime" />
+    </resultMap>
+
+
+
+
+    <insert id="addNews" parameterType="edu.hfut.hawk_eye.entity.News">
+        INSERT INTO
+        <include refid="table"></include>
+        (
+        <include refid="insertFields"/>
+        )
+        VALUES (#{title},#{content},#{pubTime},#{userId})
+    </insert>
+
+    <select id="selectNewsByKey" resultType="edu.hfut.hawk_eye.entity.News" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM
+        <include refid="table"/>
+        WHERE title LIKE "%"#{key}"%"
+    </select>
+
+    <update id="updateNews">
+        UPDATE
+        <include refid="table"></include>
+        SET title = #{title},content = #{content},pub_time = #{pubTime}
+        WHERE news_id = #{id}
+    </update>
+
+
+
+    <delete id="deleteNews" >
+        DELETE FROM
+        <include refid="table"></include>
+         WHERE news_id = #{id}
+    </delete>
+
+</mapper>
