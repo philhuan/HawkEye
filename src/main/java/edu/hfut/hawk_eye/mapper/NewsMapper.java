@@ -40,6 +40,11 @@ public interface NewsMapper {
      */
     int updateNews(News news);
 
+    /**
+     * 查询所有新闻
+     * @return  所有新闻组成的链表
+     */
+    List<News> selectALLNews();
 
 }
 

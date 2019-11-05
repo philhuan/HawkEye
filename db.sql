@@ -6,7 +6,6 @@ CREATE TABLE `t_news`
     `content`  varchar(255) NOT NULL COMMENT '内容',
     `uid`      int(11)      NOT NULL,
     `pub_time` datetime     NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-#   针对旧版mysql兼容，删除了  COMMENT 前的
     PRIMARY KEY (`news_id`),
     KEY `k_u_id` (`uid`)
 ) ENGINE = InnoDB

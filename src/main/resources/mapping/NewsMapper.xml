@@ -34,6 +34,15 @@
         WHERE title LIKE "%"#{key}"%"
     </select>
 
+    <select id="selectALLNews" resultType="edu.hfut.hawk_eye.entity.News" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM
+        <include refid="table"/>
+    </select>
+
+
+
     <update id="updateNews">
         UPDATE
         <include refid="table"></include>
