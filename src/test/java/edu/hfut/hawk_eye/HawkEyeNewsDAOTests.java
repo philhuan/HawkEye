@@ -74,12 +74,14 @@ class HawkEyeNewsDAOTests {
         System.out.println(newsMapper.updateNews(news));
 
 
-
-
-
-
     }
 
+    @Test
+    public void testSelectALLNews(){
+
+
+        System.out.println(newsMapper.selectALLNews());
+    }
 
 
 
