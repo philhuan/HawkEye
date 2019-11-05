@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * @author hjw
+ */
 @Service
 public class NewsServiceImpl implements NewsService {
     @Autowired
