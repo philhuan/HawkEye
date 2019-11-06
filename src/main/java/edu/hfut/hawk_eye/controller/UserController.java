@@ -67,6 +67,21 @@ public class UserController {
     }
 
     /**
+     * 根据id查询用户
+     * @param id
+     * @return
+     */
+    @ApiOperation(value="查询用户", notes="根据id来指定查询用户")
+    @ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Long", paramType = "path")
+    @GetMapping("/getUser/{id}")
+    public ResponseEntity<JsonResult> getUser (@PathVariable(value = "id") Integer id){
+
+        return ResponseEntity.ok(new JsonResult<>(userService.getUserById(id)));
+
+
+    }
+
+    /**
      * 用户注销
      * @param request
      * @return
@@ -126,7 +141,7 @@ public class UserController {
      * 获取登录用户信息
      * @return
      */
-    @ApiOperation(value="获取新闻", notes="获取新闻")
+    @ApiOperation(value="获取登录用户信息", notes="获取登录用户信息")
     @GetMapping("/get")
     public ResponseEntity<JsonResult> get (HttpServletRequest request){
         Integer uid = (Integer) request.getSession().getAttribute(SESSION_KEY);
