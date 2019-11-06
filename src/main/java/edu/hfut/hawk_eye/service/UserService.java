@@ -9,6 +9,12 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserService {
 
+    /**
+     * 用户登陆
+     * @param userName
+     * @param password
+     * @return
+     */
     User login(String userName, String password);
 
     /**
@@ -33,5 +39,10 @@ public interface UserService {
      */
     boolean updatePwd(int userid,String repassword);
 
+    /**
+     * ID查询用户
+     * @param id
+     * @return
+     */
     User getUserById(int id);
 }
