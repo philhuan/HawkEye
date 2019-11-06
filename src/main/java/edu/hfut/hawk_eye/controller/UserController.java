@@ -102,7 +102,11 @@ public class UserController {
             @ApiImplicitParam(name = "user", value = "用户实体 user", required = true, dataType = "User")
     })
     @PutMapping(value = "/{id}")
-    public ResponseEntity<JsonS
+    public ResponseEntity<JsonResult> update (@PathVariable("id") Integer id, @RequestBody User user){
+        user.setId(id);
+        JsonResult r = new JsonResult();
+        r.setMessage(id + "");
+        r.setData(user);
 
         if (userService.updatePwd(id,user.getPassword())) {
             return ResponseEntity.ok(r);
