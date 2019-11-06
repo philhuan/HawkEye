@@ -1,6 +1,6 @@
 package edu.hfut.hawk_eye.config;
 
-import edu.hfut.hawk_eye.interceptor.LoginInterceptor;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,14 +14,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@Configuration
-public class WebConfig implements WebMvcConfigurer {
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginInterceptor())
-                .addPathPatterns("/news");
-    }
-
-}
+//@Configuration
+//public class WebConfig implements WebMvcConfigurer {
+//
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(new LoginInterceptor())
+//                .addPathPatterns("/news");
+//    }
+//
+//}
 

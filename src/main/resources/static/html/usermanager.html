@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+    <script type="text/javascript" src="/js/jquery.1.12.4.min.js"></script>
+</head>
+<body>
+
+  <table border="1" align="center" id = "table">
+
+  </table>
+</body>
+
+<script>
+    var tableHead ="<tr>\n" +
+        "     <td>序号</td>\n" +
+        "     <td>用户</td>\n" +
+        "     <td>操作</td>\n" +
+        "   </tr>"
+
+    $(function () {
+        $.get("/users/",function (data) {
+            console.log(data)
+            if (data.state == 0) {
+                list = data.data
+                putNews(list)
+            }
+        })
+    });
+
+    function putUsers(list) {
+        var html = ""
+        for (var i = 0; i < list.length; i++) {
+            var user = list[i]
+            html += "<tr>\n" +
+                "     <td>"+ user.id +"</td>\n" +
+                "     <td>"+ user.name +"</td>\n" +
+                "     <td><a href=\"javascript:delUsers("+user.id+")\">删除</a>" +
+                "<a href=\"#\">修改</a></td>\n" +
+                "   </tr>"
+        }
+
+        document.getElementById("table").innerHTML = tableHead + html
+    }
+</script>
+</html>

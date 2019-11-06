@@ -26,7 +26,7 @@ public class UserController {
     @ApiImplicitParam(name = "user", value = "用户详细实体user", required = true, dataType = "User")
     @PostMapping("/")
     public ResponseEntity<JsonResult<User>> add (@RequestBody User user){
-        JsonResult<User> r = new JsonResult<>(1, "ok", user);
+        JsonResult<User> r = new JsonResult<>();
         return ResponseEntity.ok(r);
     }
 
@@ -75,6 +75,7 @@ public class UserController {
     })
     @PutMapping(value = "/{id}")
     public ResponseEntity<JsonResult> update (@PathVariable("id") Integer id, @RequestBody User user){
+        user.setId(id);
         JsonResult r = new JsonResult();
         r.setMessage(id + "");
         r.setData(user);
