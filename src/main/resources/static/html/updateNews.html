@@ -39,13 +39,14 @@
     function syncUI() {
         $("#title").val(news.title)
         $("#content").val(news.content)
-        $("#username").val(getUserNameById(news.userId))
+        // console.log(user)
+        $("#username").val(user.userName)
 
     }
 
     function back() {
         window.history.go(-1);
-        location.reload();
+        //location.reload();
     }
 
     function getNewsFromInput() {
@@ -67,7 +68,7 @@
                 if (data.state == 0) {
                     top.location.replace("/html/index.html")
                 } else {
-                    alert(data.message)
+                     alert(data.message)
                 }
             }
         });
@@ -80,7 +81,7 @@
         for (var i = 0; i < vars.length; i++) {
             var pair = vars[i].split("=");
             if (pair[0] == variable) {
-                return pair[1];
+                return decodeURI(pair[1]);
             }
         }
         return (false);
@@ -94,6 +95,12 @@
         "userId": 0
     }
 
+    var user = {
+        "id": 24,
+        "userName": "string",
+        "password": "string"
+    }
+
     function getNewsFromParam() {
         news.content = getQueryVariable("content")
         news.title = getQueryVariable("title")
@@ -104,13 +111,26 @@
     }
 
     function getUserNameById(id) {
-        return "hjw"
+        //alert(id)
+
+        $.ajax("/users/" + id, function () {
+            if (data.state == 0) {
+                console.log(data)
+                user = data.data
+                syncUI()
+            } else {
+                alert(data.message)
+            }
+        })
+
     }
 
 
     $(function () {
         getNewsFromParam()
+        getUserNameById(news.userId)
         syncUI()
+
 
     })
 

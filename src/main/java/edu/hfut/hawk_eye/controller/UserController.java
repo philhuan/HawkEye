@@ -73,7 +73,7 @@ public class UserController {
      */
     @ApiOperation(value="查询用户", notes="根据id来指定查询用户")
     @ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Long", paramType = "path")
-    @GetMapping("/getUser/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<JsonResult> getUser (@PathVariable(value = "id") Integer id){
 
         return ResponseEntity.ok(new JsonResult<>(userService.getUserById(id)));

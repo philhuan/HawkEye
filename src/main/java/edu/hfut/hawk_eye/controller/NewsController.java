@@ -6,15 +6,18 @@ import edu.hfut.hawk_eye.service.NewsService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
 @RequestMapping("/news")
 public class NewsController {
+    public final static String SESSION_KEY = "user";
 
     @Autowired
     NewsService newsService;
@@ -27,7 +30,11 @@ public class NewsController {
     @ApiOperation(value="创建新闻", notes="根据 News 对象创建新闻")
     @ApiImplicitParam(name = "news", value = "新闻实体 News ", required = true, dataType = "News")
     @PostMapping("/")
-    public ResponseEntity<JsonResult<News>> add (@RequestBody News news){
+    public ResponseEntity<JsonResult<News>> add (HttpSession session,@RequestBody News news){
+        if (session.getAttribute(SESSION_KEY) == null) {
+            return ResponseEntity.ok(new JsonResult<>("获取用户信息失败"));
+        }
+        news.setUserId((Integer) session.getAttribute(SESSION_KEY));
         if (newsService.add(news)) {
             return ResponseEntity.ok(new JsonResult<News>());
         } else {
@@ -69,7 +76,8 @@ public class NewsController {
      */
     @ApiOperation(value="获取新闻", notes="获取新闻")
     @GetMapping("/")
-    public ResponseEntity<JsonResult<List<News>>> get (){
+    public ResponseEntity<JsonResult<List<News>>> get(){
+
         return ResponseEntity.ok(new JsonResult<>(newsService.getAll()));
     }
 

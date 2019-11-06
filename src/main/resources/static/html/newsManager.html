@@ -3,6 +3,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
+
+
+
 </head>
 <body>
 
@@ -76,12 +79,14 @@ function putNews(list) {
         var news = list[i]
         html += "<tr>\n" +
             "     <td>"+(i + 1)+"</td>\n" +
-            "     <td>"+news.title+"</td>\n" +
+            "     <td style='min-width: 50px'>"+news.title+"</td>\n" +
             "     <td>"+news.content+"</td>\n" +
             "     <td>"+news.pubTime+"</td>\n" +
-            "     <td>\n" +
+            "     <td style='min-width: 80px' >\n" +
             "     <a href=\"showNews.html?title="+news.title+"&content="+news.content+"\"\>查看详情</a>\n" +
+                "<br/>" +
             "     <a href=\"javascript:deleteNews("+ news.id +")\">删除</a>\n" +
+                "<br/>" +
             "     <a href=\"updateNews.html?newsid="+ news.id +"&title="+news.title+"&content="+news.content+"&pubtime="+news.pubTime+"&userId="+news.userId+"\">修改</a>\n" +
             "     </td>\n" +
             "   </tr>\n" +
