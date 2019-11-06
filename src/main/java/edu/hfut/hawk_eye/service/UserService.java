@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserService {
 
+    User login(String userName, String password);
+
     /**
      * 增加用户
      * @param user
@@ -30,4 +32,6 @@ public interface UserService {
      * @return
      */
     boolean updatePwd(int userid,String repassword);
+
+    User getUserById(int id);
 }

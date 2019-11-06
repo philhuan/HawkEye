@@ -23,7 +23,8 @@
         (
         <include refid="insertFields"/>
         )
-        VALUES (#{title},#{content},#{pubTime},#{userId})
+        VALUES (#{title},#{content},now(),#{userId})
+
     </insert>
 
     <select id="selectNewsByKey" resultType="edu.hfut.hawk_eye.entity.News" resultMap="BaseResultMap">

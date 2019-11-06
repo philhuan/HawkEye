@@ -16,6 +16,11 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    public User login(String userName, String password) {
+        return userMapper.getUser(userName, password);
+    }
+
+    @Override
     public boolean add(User user) {
         boolean flag=false;
         if(userMapper.addUser(user)>0) {
@@ -50,4 +55,9 @@ public class UserServiceImpl implements UserService {
             return flag;
 
         }
+
+    @Override
+    public User getUserById(int id) {
+        return userMapper.getUserById(id);
+    }
 }

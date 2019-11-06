@@ -29,6 +29,15 @@ public interface UserMapper {
     User getUser(String userName, String password);
 
     /**
+     * 根据id获取用户
+     * @param userName
+     * @param password
+     * @return 对应User对象
+     */
+    User getUserById(int id);
+
+
+    /**
      *加入用户
      * @param u
      * @return 返回成功影响行数量（1）

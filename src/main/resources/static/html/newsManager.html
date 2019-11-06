@@ -33,7 +33,7 @@
 function serch(){
 
 	var key=document.getElementById("key").value;
-	alert(key)
+
     $.ajax({
         type: "POST",
         url: "/news/search",
@@ -43,8 +43,10 @@ function serch(){
             console.log(data)
             if (data.state == 0) {
                 putNews(data.data)
-                alert("111")
 
+
+            }else {
+             alert(data.message)
             }
         }
     });
@@ -60,6 +62,8 @@ $(function () {
         if (data.state == 0) {
             list = data.data
             putNews(list)
+        }else {
+         alert(data.message)
         }
     })
 });
@@ -78,7 +82,7 @@ function putNews(list) {
             "     <td>\n" +
             "     <a href=\"showNews.html?title="+news.title+"&content="+news.content+"\"\>查看详情</a>\n" +
             "     <a href=\"javascript:deleteNews("+ news.id +")\">删除</a>\n" +
-            "     <a href=\"updateNews.html?newsid="+ news.id +"&title="+news.title+"&content="+news.content+"&pubtime="+news.pubTime+"\">修改</a>\n" +
+            "     <a href=\"updateNews.html?newsid="+ news.id +"&title="+news.title+"&content="+news.content+"&pubtime="+news.pubTime+"&userId="+news.userId+"\">修改</a>\n" +
             "     </td>\n" +
             "   </tr>\n" +
             "   <input type=\"hidden\" name=\"id\" value=\""+ news.id +"\">"
@@ -88,9 +92,20 @@ function putNews(list) {
 }
 
 
-function deleteNews(id) {
-    alert("del" + id)
-}
+    function deleteNews(id) {
+
+     $.ajax({
+      type: "DELETE",
+      url: "/news/" + id,
+      success: function (data) {
+       if (data.state == 0) {
+        top.location.replace("/html/index.html")
+       } else {
+        alert(data.message)
+       }
+      }
+     });
+    }
 
 
 

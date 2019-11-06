@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author yxs
@@ -35,7 +36,7 @@ public class UserController {
     @ApiImplicitParam(name = "user", value = "用户详细实体user", required = true, dataType = "User")
     @PostMapping("/")
     public ResponseEntity<JsonResult<User>> add (@RequestBody User user){
-        JsonResult<User> r = new JsonResult<>(1, "ok", user);
+        JsonResult<User> r = new JsonResult<>();
 
 
         if (userService.add(user)) {
@@ -83,7 +84,12 @@ public class UserController {
     @ApiImplicitParam(name = "user", value = "用户详细实体user", required = true, dataType = "User")
     @PostMapping("/login")
     public ResponseEntity<JsonResult> login(HttpServletRequest request, @RequestBody User user) {
-        request.getSession().setAttribute(SESSION_KEY,user.getId());
+        User user1 = userService.login(user.getUserName(), user.getPassword());
+        if (user1 == null) {
+            return ResponseEntity.ok(new JsonResult<User>("密码错误"));
+        }
+
+        request.getSession().setAttribute(SESSION_KEY,user1.getId());
         JsonResult r = new JsonResult();
         r.setMessage("ok");
         return ResponseEntity.ok(r);
@@ -115,4 +121,22 @@ public class UserController {
         }
 
     }
+
+    /**
+     * 获取登录用户信息
+     * @return
+     */
+    @ApiOperation(value="获取新闻", notes="获取新闻")
+    @GetMapping("/get")
+    public ResponseEntity<JsonResult> get (HttpServletRequest request){
+        Integer uid = (Integer) request.getSession().getAttribute(SESSION_KEY);
+
+        if (uid == null) {
+            return ResponseEntity.ok(new JsonResult<User>("用户未登录"));
+        }
+
+
+        return ResponseEntity.ok(new JsonResult<>(userService.getUserById(uid)));
+    }
+
 }

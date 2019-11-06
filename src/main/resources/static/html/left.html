@@ -17,14 +17,14 @@
             <li class="nav-item">
                 <a href="javascript:openNews()"><i class="my-icon nav-icon icon_1"></i><span>新闻管理</span><i class="my-icon nav-more"></i></a>
             </li>
+<!--            <li class="nav-item">-->
+<!--                <a href="usermanager.html" target="main"><i class="my-icon nav-icon icon_2"></i><span>用户管理</span><i class="my-icon nav-more"></i></a>-->
+<!--            </li>-->
             <li class="nav-item">
-                <a href="usermanager.html" target="main"><i class="my-icon nav-icon icon_2"></i><span>用户管理</span><i class="my-icon nav-more"></i></a>
-            </li>
-            <li class="nav-item">
-                <a href="../ExitServlet" target="index"><i class="my-icon nav-icon icon_3"></i><span>退出登录</span><i class="my-icon nav-more"></i></a>
+                <a href="javascript:logout()" ><i class="my-icon nav-icon icon_3"></i><span>退出登录</span><i class="my-icon nav-more"></i></a>
             </li>
              <li class="nav-item">
-                <a href="updatepassword.html?userid=<%=u.getId() %>" target="main"><i class="my-icon nav-icon icon_3"></i><span>修改密码</span><i class="my-icon nav-more"></i></a>
+                <a href="updatepassword.html" target="main"><i class="my-icon nav-icon icon_3"></i><span>修改密码</span><i class="my-icon nav-more"></i></a>
 
             </li>
         </ul>
@@ -34,6 +34,17 @@
 <script type="text/javascript">
 function openNews(){
 	window.open('newsManager.html',"main");
+}
+
+function logout() {
+    $.post("/users/logout", function (data) {
+        console.log(data)
+        if (data.state == 0) {
+            top.location.replace( "/login.html")
+        }else {
+            alert(data.message)
+        }
+    })
 }
 
 

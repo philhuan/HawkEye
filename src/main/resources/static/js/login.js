@@ -52,10 +52,12 @@ function login() {
         type: "POST",
         url: "/users/login",
         contentType: "application/json",
-        data : JSON.stringify({user: user}),
+        data : JSON.stringify(user),
         success:function(data) {
             if (data.state == 0) {
                 window.location.href = "/html/index.html"
+            } else {
+                alert(data.message)
             }
         }
     });
@@ -77,16 +79,21 @@ function register() {
         "userName": userName
     }
 
+    console.log(user)
+
     $.ajax({
         type: "POST",
         url: "/users/",
         contentType: "application/json",
-        data : JSON.stringify({user: user}),
+        data : JSON.stringify(user),
+        dataType : 'json',
         success:function(data) {
             console.log(data)
             if (data.state == 0) {
                 location.reload();
 
+            }else {
+                alert(data.message)
             }
         }
     });

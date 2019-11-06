@@ -20,6 +20,14 @@
          WHERE username = #{userName} AND password = #{password}
     </select>
 
+    <select id="getUserById" resultType="edu.hfut.hawk_eye.entity.User" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM
+        <include refid="table"/>
+        WHERE uid = #{id}
+    </select>
+
     <insert id="addUser" parameterType="edu.hfut.hawk_eye.entity.User">
         INSERT INTO
         <include refid="table"></include>
