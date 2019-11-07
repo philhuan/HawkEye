@@ -56,11 +56,8 @@
     function syncUI() {
         $("#title").val(news.title)
         $("#content").val(news.content)
-        console.log(user)
-     // alert(user.userName)
+        //console.log(user)
         $("#username").val(user.userName)
-
-
     }
 
     function back() {
@@ -86,10 +83,6 @@
     function getUsersFrom(data) {
 
      user.userName =data.data.userName
-     // alert(user.userName)
-     $("#username").val(user.userName)
-
-
      return user
     }
 
@@ -102,21 +95,14 @@
       url: "/users/" + id,
       success: function (data) {
        if (data.state == 0) {
-
-        // getNewsFrom(data)
-        $("#username").val(data.data.userName)
-        getUsersFrom(data)
-
-        console.log(user)
-           // callback(db)
-
-
+        getUsersFrom(data);
+        syncUI()
        } else {
         alert(data.message)
        }
       }
      });
-     
+
     }
 
     function getNews(id) {
@@ -128,17 +114,10 @@
       // data:{"id":"value"},    //参数值
       success: function (data) {
        if (data.state == 0) {
-        // top.location.replace("/html/index.html")
         getNewsFrom(data)
-        $("#title").val(data.data.title)
-        $("#content").val(data.data.content)
-        console.log(news)
         getUsers(data.data.userId)
-        // getNewsFromInput()
-        console.log(news)
-        //$("#username").val(user.userName)
-        //    callback(db)
-
+        console.log(news);
+        syncUI()
        } else {
         alert(data.message)
        }
