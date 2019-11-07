@@ -106,7 +106,7 @@ function register() {
             console.log(data)
             if (data.state == 0) {
                 // location.reload();
-                window.location.href = "loginT.html"
+                window.location.href = "login.html"
 
 
             }else {
