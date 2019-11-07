@@ -121,7 +121,7 @@
           var news = list[i]
 
           html +="<div class=\"item\">\n" +
-              "        <h4><a href=\"details.html\">"+ news.title +"</a><span class=\"time\">"+ news.pubTime +"</span></h4>\n" +
+              "        <h4><a href=\"html\\details.html?newsId="+news.id+"\">"+ news.title +"</a><span class=\"time\">"+ news.pubTime +"</span></h4>\n" +
               "        <p>"+ news.content + "</p>\n" +
               "      </div>"
       }
