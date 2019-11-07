@@ -35,6 +35,8 @@ public interface NewsService {
 
     /**
      * 获得所有新闻
+     * 内容长度多于CONTENT_MAX_LENGTH时，
+     * 截取CONTENT_MAX_LENGTH长度的内容
      * @return
      */
     List<News> getAll();

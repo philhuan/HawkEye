@@ -13,6 +13,9 @@ import java.util.List;
  */
 @Service
 public class NewsServiceImpl implements NewsService {
+
+    private static final int CONTENT_MAX_LENGTH =100;//新闻内容最大长度
+
     @Autowired
     NewsMapper newsMapper;
 
@@ -33,7 +36,26 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public List<News> getAll() {
-        return newsMapper.selectALLNews();
+        List<News> newsList = newsMapper.selectALLNews();
+        for(int i=0;i<newsList.size();i++){
+            News news =newsList.get(i);
+            String content=news.getContent();
+
+            /**
+             * 内容长度多于CONTENT_MAX_LENGTH时，
+             * 截取CONTENT_MAX_LENGTH长度的内容
+             */
+            if(content.length()>CONTENT_MAX_LENGTH){
+                content=content.substring(0,CONTENT_MAX_LENGTH);
+                content=content+"...";
+                news.setContent(content);
+
+                newsList.set(i,news);
+            }
+
+
+        }
+        return newsList;
     }
 
     @Override
