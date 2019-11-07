@@ -15,13 +15,26 @@ function to_Login() {
 }
 
 function check() {
+
+    /*´íÎóclass  form-control is-invalid
+    		ÕýÈ·class  form-control is-valid*/
+    var flagName=false;
+    var flagPas=false;
+    var flagPass=false;
+
     if ($("#r_Username").val() == "") {
         $(".erro_3").text("ÓÃ»§Ãû²»ÄÜÎª¿Õ");
+        // $("#r_Username").removeClass("form-control is-valid")
+        // $("#r_Username").addClass("form-control is-invalid");
+        // flagName=false;
         return false;
     }//ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Ð¿ï¿½
 
     if ($("#r_Psw").val().length > 18 || $("#r_Psw").val().length < 6) {
         $(".erro_4").text("ÇëÊäÈë6~18Î»ÃÜÂë");
+        // $("#r_Psw").removeClass("form-control is-valid")
+        // $("#r_Psw").addClass("form-control is-invalid");
+        // flagPas=false;
         return false;
     }//6~18Î»ÃÜÂë
 
@@ -33,12 +46,14 @@ function check() {
 
     else if ($("#r_Psw").val() != $("#r_Psw2").val()) {
         $(".erro_4").text("ÄãÊäÈëµÄÁ½´ÎÃÜÂë²»Ò»ÖÂ");
+        return false;
     }//ï¿½ï¿½ï¿½ë²»Îªï¿½Õ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë²»ï¿½ï¿½Í¬
 
     return true;
 }
 
 function login() {
+    // alert("µ÷ÓÃÁË")
 	var userName = $('#username').val()
 	var password = $("#psw").val()
 
@@ -90,7 +105,9 @@ function register() {
         success:function(data) {
             console.log(data)
             if (data.state == 0) {
-                location.reload();
+                // location.reload();
+                window.location.href = "loginT.html"
+
 
             }else {
                 alert(data.message)
