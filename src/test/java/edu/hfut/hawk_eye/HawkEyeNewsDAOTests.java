@@ -81,7 +81,18 @@ class HawkEyeNewsDAOTests {
 
 
         System.out.println(newsMapper.selectALLNews());
+
     }
+
+    @Test
+    public void testSelectNewsById(){
+
+
+        System.out.println(newsMapper.selectNewsById(20));
+
+    }
+
+
 
 
 

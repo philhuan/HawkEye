@@ -46,5 +46,14 @@ public interface NewsService {
      */
     boolean update(News news);
 
+    /**
+     * ID查新闻
+     * @param newsId
+     * @return
+     */
+    News getById(int newsId);
+
+
+
 
 }

@@ -41,4 +41,9 @@ public class NewsServiceImpl implements NewsService {
         return newsMapper.updateNews(news) > 0;
     }
 
+    @Override
+    public News getById(int newsId) {
+        return newsMapper.selectNewsById(newsId);
+    }
+
 }

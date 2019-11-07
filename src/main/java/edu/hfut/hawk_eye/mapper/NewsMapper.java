@@ -46,5 +46,12 @@ public interface NewsMapper {
      */
     List<News> selectALLNews();
 
+    /**
+     * 根据ID查询新闻
+     * @param newsId
+     * @return
+     */
+    News selectNewsById(int newsId);
+
 }
 

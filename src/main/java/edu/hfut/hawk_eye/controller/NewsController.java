@@ -81,6 +81,17 @@ public class NewsController {
         return ResponseEntity.ok(new JsonResult<>(newsService.getAll()));
     }
 
+    /**
+     * 根据ID获取新闻
+     * @return
+     */
+    @ApiOperation(value="用ID获取新闻", notes="用ID获取新闻")
+    @PostMapping("/{id}")
+    public ResponseEntity<JsonResult<News>> getByID(@PathVariable(value = "id") Integer id){
+
+        return ResponseEntity.ok(new JsonResult<>(newsService.getById(id)));
+    }
+
 
     /**
      * 根据id修改新闻
