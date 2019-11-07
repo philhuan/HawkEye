@@ -56,44 +56,28 @@
     function syncUI() {
         $("#title").val(news.title)
         $("#content").val(news.content)
-        console.log(user)
-        // alert(user.userName)
         $("#username").val(user.userName)
-
-
     }
 
     function back() {
         window.history.go(-1);
-        //location.reload();
     }
 
     function getNewsFromInput() {
         news.title = $("#title").val()
         news.content = $("#content").val()
-        return news
     }
 
     function getNewsFrom(data) {
-
         news.title = data.data.title
         news.content = data.data.content
         news.userId = data.data.userId
-
-        return news
     }
 
     function getUsersFrom(data) {
-
         user.userName =data.data.userName
-        // alert(user.userName)
-        $("#username").val(user.userName)
-
-
         return user
     }
-
-
 
     function getUsers(id) {
 
@@ -102,21 +86,13 @@
             url: "/users/" + id,
             success: function (data) {
                 if (data.state == 0) {
-
-                    // getNewsFrom(data)
-                    $("#username").val(data.data.userName)
                     getUsersFrom(data)
-
-                    console.log(user)
-                    // callback(db)
-
-
+                    syncUI()
                 } else {
                     alert(data.message)
                 }
             }
         });
-
     }
 
     function getNews(id) {
@@ -128,30 +104,18 @@
             // data:{"id":"value"},    //参数值
             success: function (data) {
                 if (data.state == 0) {
-                    // top.location.replace("/html/index.html")
                     getNewsFrom(data)
-                    $("#title").val(data.data.title)
-                    $("#content").val(data.data.content)
-                    console.log(news)
                     getUsers(data.data.userId)
-                    // getNewsFromInput()
-                    console.log(news)
-                    //$("#username").val(user.userName)
-                    //    callback(db)
-
+                    syncUI()
                 } else {
                     alert(data.message)
                 }
             }
-
-
         });
     }
 
     function save() {
-        news = getNewsFromInput()
-        console.log(news)
-
+        getNewsFromInput()
         $.ajax({
             type: "PUT",
             url: "/news/" + news.id,
@@ -175,7 +139,6 @@
             var pair = vars[i].split("=");
             if (pair[0] == variable) {
                 return pair[1];
-
             }
         }
         return (false);
@@ -184,15 +147,10 @@
 
 
     function getNewsFromParam() {
-
         news.id = getQueryVariable("newsId")
-
-        console.log(news)
     }
 
     function getUserNameById(id) {
-        //alert(id)
-
         $.ajax("/users/" + id, function () {
             if (data.state == 0) {
                 console.log(data)
@@ -202,17 +160,13 @@
                 alert(data.message)
             }
         })
-
     }
 
 
     $(function () {
         getNewsFromParam()
         getNews(news.id)
-        // getUsers(news.userId)
         syncUI()
-
-
     })
 
 
