@@ -35,18 +35,19 @@
 
 <div class="micronews-container micronews-search-container w1000">
   <div class="layui-fluid">
-    <h1 style="text-align:center">Hawk Eye 新闻管理系统</h1>
+    <h1 style="text-align:center">Hawk Eye 新闻</h1>
+      <br />
+      <h5 style="text-align:center">与您一起看世界</h5>
     <!--            <p class="num">为您找到相关新闻共<span> &nbsp;1770000&nbsp; </span>个</p>-->
-    <div class="item-list">
+    <div id ="list" class="item-list">
+
+<!--        新闻模块-->
       <div class="item">
         <h4><a href="details.html">AI人才抢夺"生猛":应届博士年薪涨到80万元 </a><span class="time">3小时前</span></h4>
         <p>人工智能(AI)人才薪水之高、涨幅之大,颇有令人瞠目结舌之感。
           一年前,针对AI领域的应届毕业生,硕士生约莫能拿到30万元的年薪,博士生则高达50万元。有企业给应届生的薪水拔高了10%~20%；也有企业上涨幅度更大，尤其是给博士生的薪水从去年的50万元年薪倏地蹿到80万元；也有准备布局AI领域的新锐企业</p>
       </div>
-      <div class="item">
-        <h4><a href="details.html">AI人才抢夺"生猛":应届博士年薪涨到80万元 </a><span class="time">3小时前</span></h4>
-        <p>人工智能(AI)人才薪水之高、涨幅之大,颇有令人瞠目结舌之感。 一年前,针对AI领域的应届毕业生,硕士生约莫能拿到30万元的年薪,博士生则高达50万元。有企业给应届生的薪水拔高了10%~20%；也有企业上涨幅度更大，尤其是给博士生的薪水从去年的50万元年薪倏地蹿到80万元；也有准备布局AI领域的新锐...</p>
-      </div>
+
       <div id="micronews-search-test" style="text-align: center; padding:30px 0"></div>
     </div>
   </div>
@@ -56,6 +57,7 @@
 
 
 <script type="text/javascript" src="/res/layui/layui.js"></script>
+<script type="text/javascript" src="/js/jquery.1.12.4.min.js"></script>
 <!--[if lt IE 9]>
 <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
 <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
@@ -70,6 +72,65 @@
     index.seachBtn()
     index.arrowutil()
   });
+
+
+
+  function serch(){
+
+      var key=document.getElementById("key").value;
+
+      $.ajax({
+          type: "POST",
+          url: "/news/search",
+          contentType: "application/json",
+          data : key,
+          success:function(data) {
+              console.log(data)
+              if (data.state == 0) {
+                  putNews(data.data)
+
+
+              }else {
+                  alert(data.message)
+              }
+          }
+      });
+
+  }
+  function empty(){
+      document.getElementById("key").value="";
+  }
+
+  $(function () {
+      $.get("/news/",function (data) {
+          console.log(data)
+          if (data.state == 0) {
+              list = data.data
+              putNews(list)
+          }else {
+              alert(data.message)
+          }
+      })
+  });
+
+
+
+  function putNews(list) {
+      var html = ""
+      for (var i = 0; i < list.length; i++) {
+          var news = list[i]
+
+          html +="<div class=\"item\">\n" +
+              "        <h4><a href=\"details.html\">"+ news.title +"</a><span class=\"time\">"+ news.pubTime +"</span></h4>\n" +
+              "        <p>"+ news.content + "</p>\n" +
+              "      </div>"
+      }
+
+      document.getElementById("list").innerHTML = html
+  }
+
+
+
 </script>
 </body>
 </html>
