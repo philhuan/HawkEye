@@ -66,15 +66,12 @@
     function getNewsFromInput() {
         news.title = $("#title").val()
         news.content = $("#content").val()
-        return news
     }
 
     function getNewsFrom(data) {
-
         news.title = data.data.title
         news.content = data.data.content
         news.userId = data.data.userId
-        return news
     }
 
     function getUsersFrom(data) {
@@ -118,8 +115,7 @@
     }
 
     function save() {
-        news = getNewsFromInput()
-        console.log(news)
+        getNewsFromInput()
         $.ajax({
             type: "PUT",
             url: "/news/" + news.id,
@@ -152,7 +148,6 @@
 
     function getNewsFromParam() {
         news.id = getQueryVariable("newsId")
-        console.log(news)
     }
 
     function getUserNameById(id) {
