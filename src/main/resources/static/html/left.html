@@ -40,7 +40,7 @@ function logout() {
     $.post("/users/logout", function (data) {
         console.log(data)
         if (data.state == 0) {
-            top.location.replace( "/login.html")
+            top.location.replace( "/html/login.html")
         }else {
             alert(data.message)
         }
