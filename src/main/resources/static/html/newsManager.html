@@ -84,12 +84,13 @@ function putNews(list) {
             "     <td>"+news.pubTime+"</td>\n" +
             "     <td style='min-width: 80px' >\n" +
             // "     <a href=\"showNews.html?title="+news.title+"&content="+news.content+"\"\>查看详情</a>\n" +"     <a href=\"showNews.html?title="+news.title+"&content="+news.content+"\"\>查看详情</a>\n" +
-                "     <a href=\"showNewsTest.html?newsId="+news.id+"\"\>查看详情</a>\n" +
+                "     <a href=\"showNews.html?newsId="+news.id+"\"\>查看详情</a>\n" +
                 "<br/>" +
             "     <a href=\"javascript:deleteNews("+ news.id +")\">删除</a>\n" +
                 "<br/>" +
-            "     <a href=\"updateNews.html?newsid="+ news.id +"&title="+news.title+"&content="+news.content+"&pubtime="+news.pubTime+"&userId="+news.userId+"\">修改</a>\n" +
-            "     </td>\n" +
+            // "     <a href=\"updateNews.html?newsId="+news.id+"\">修改</a>\n" +
+                "     <a href=\"updateNews.html?newsId="+news.id+"\"\>修改</a>\n" +
+                "     </td>\n" +
             "   </tr>\n" +
             "   <input type=\"hidden\" name=\"id\" value=\""+ news.id +"\">"
     }

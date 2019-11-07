@@ -3,7 +3,7 @@ CREATE TABLE `t_news`
 (
     `news_id`  int(11)      NOT NULL AUTO_INCREMENT COMMENT '新闻id',
     `title`    varchar(50)  NOT NULL COMMENT '标题',
-    `content`  varchar(255) NOT NULL COMMENT '内容',
+    `content`  TEXT NOT NULL COMMENT '内容',
     `uid`      int(11)      NOT NULL,
     `pub_time` datetime     NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     PRIMARY KEY (`news_id`),

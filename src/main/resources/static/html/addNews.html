@@ -1,75 +1,79 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<base href=" <%=basePath%>">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Insert title here</title>
+    <base href=" <%=basePath%>">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Insert title here</title>
 </head>
 <body>
 添加新闻
 <hr>
 <form action="javascript:commit()" method="post">
-<table border="1" align="center">
-<tr>
-<td>新闻题目：</td>
-<td><input type="text" name="title" id = "title" ></td>
-</tr>
-<tr>
-<td>新闻内容：</td>
-<td><textarea rows="15" cols="50" name="content" id = "content"></textarea></td>
-</tr>
-<tr>
-<td colspan="2"><input type="submit" value="提交">
-<input type="reset" value="重置">
-</td>
-</tr>
-</table>
-<input type="hidden" name="userid" value="<%=u.getId()%>">
+    <table border="1" align="center">
+        <tr>
+            <td>新闻题目：</td>
+            <td><input type="text" name="title" id="title"></td>
+        </tr>
+        <tr>
+            <td>新闻内容：</td>
+            <td><textarea rows="15" cols="50" name="content" id="content"></textarea></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="提交">
+<!--                <input class="btn" type="submit" onclick="commit()" value="确定"/>-->
+                <input type="reset" value="重置">
+            </td>
+        </tr>
+    </table>
+    <input type="hidden" name="userid" value="<%=u.getId()%>">
 </form>
 
 
 </body>
 <script type="text/javascript" src="/js/jquery.1.12.4.min.js"></script>
-<script type="text/javascript" >
-  var user ;
-  $(function () {
-    $.get("/users/get" , function (data) {
-      if (data.state == 0) {
-        user = data.data
-      } else {
-        top.location.replace( "/login.html")
-      }
+<script type="text/javascript">
+    var user;
+    $(function () {
+        $.get("/users/get/", function (data) {
+            if (data.state == 0) {
+                user = data.data
+            } else {
+                top.location.replace("/login.html")
+            }
+        })
     })
-  })
 
-  function commit() {
-    title = $("#title").val()
-    content = $("#content").val()
-    console.log(title,content)
-
-    var news = {
-      "content": content,
-      "id": 0,
-      "pubTime": "2019-1-1",
-      "title": title,
-      "userId": 0
-    }
-
-    $.ajax({
-      type: "POST",
-      url: "/news/",
-      contentType: "application/json",
-      data : JSON.stringify(news),
-      success:function(data) {
-        console.log(data)
-        if (data.state == 0) {
-          top.location.replace("/html/index.html")
-        } else {
-          alert(data.message)
+    function commit() {
+        var news = {
+            "content": 'content',
+            "id": 0,
+            "pubTime": "2019-1-1",
+            "title": 'title',
+            "userId": 0
         }
-      }
-    });
-  }
+
+        news.title = $("#title").val()
+        news.content = $("#content").val()
+        console.log(news.title, news.content)
+
+
+
+        $.ajax({
+            type: "POST",
+            url: "/news/",
+            contentType: "application/json",
+            data: JSON.stringify(news),
+            success: function (data) {
+                console.log(data)
+                if (data.state == 0) {
+                    top.location.replace("/html/index.html")
+                } else {
+                    alert(data.message)
+                }
+            }
+        });
+    }
 
 </script>
 </html>

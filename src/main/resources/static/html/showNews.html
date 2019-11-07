@@ -1,35 +1,43 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Insert title here</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>显示新闻</title>
 </head>
 <body>
-添加新闻
+显示新闻
 <hr>
-<form action="" method="">
-    <table border="1" align="center">
+<form action="javascript:save();" method="post">
+    <table align="center" border="1">
         <tr>
             <td>新闻题目：</td>
-            <td><input type="text" name="title" id="title" value="" disabled="disabled"></td>
+            <td><input id="title" name="title" type="text" value="" disabled="disabled">
+            </td>
         </tr>
         <tr>
             <td>新闻内容：</td>
-            <td><textarea rows="15" cols="50" name="content" id="content" disabled="disabled"></textarea></td>
+            <td><textarea cols="50" id="content" name="content" rows="15" disabled="disabled"></textarea></td>
         </tr>
         <tr>
-            <td colspan="2"><input type="button" value="关闭" onclick="guanbi()">
+            <td>发布人：</td>
+            <td><input id="username" name="username" type="text" value="" disabled="disabled"></td>
+        </tr>
 
+        <input name="newsid" newsid type="hidden" value="">
+
+        <tr>
+            <td colspan="2">
+                <input onclik="" type="submit" value="保存">
+                <input type="reset" value="重置">
+                <input onclick="back()" type="button" value="返回">
             </td>
         </tr>
     </table>
 </form>
-<script type="text/javascript" src="/js/jquery.1.12.4.min.js"></script>
-<script type="text/javascript" charset="utf-8">
-    function guanbi() {
-        window.history.go(-1);
-        //location.reload();
-    }
+<script src="/js/jquery.1.12.4.min.js" type="text/javascript"></script>
+<script charset="utf-8" type="text/javascript">
+
 
     var news = {
         "content": "",
@@ -39,20 +47,125 @@
         "userId": 0
     }
 
-    function getNewsFromParam() {
-        news.content = getQueryVariable("content")
-        //news.content = eval(getQueryVariable("content"))
-        news.title = getQueryVariable("title")
-        news.userId = getQueryVariable("userId")
-        news.id = getQueryVariable("newsid")
-
-        console.log(news)
+    var user = {
+        "id": 0,
+        "userName": "",
+        "password": ""
     }
 
     function syncUI() {
         $("#title").val(news.title)
         $("#content").val(news.content)
+        console.log(user)
+        // alert(user.userName)
+        $("#username").val(user.userName)
+
+
+    }
+
+    function back() {
+        window.history.go(-1);
+        //location.reload();
+    }
+
+    function getNewsFromInput() {
+        news.title = $("#title").val()
+        news.content = $("#content").val()
+        return news
+    }
+
+    function getNewsFrom(data) {
+
+        news.title = data.data.title
+        news.content = data.data.content
+        news.userId = data.data.userId
+
+        return news
+    }
+
+    function getUsersFrom(data) {
+
+        user.userName =data.data.userName
+        // alert(user.userName)
+        $("#username").val(user.userName)
+
+
+        return user
+    }
+
+
+
+    function getUsers(id) {
+
+        $.ajax({
+            type: "GET",
+            url: "/users/" + id,
+            success: function (data) {
+                if (data.state == 0) {
+
+                    // getNewsFrom(data)
+                    $("#username").val(data.data.userName)
+                    getUsersFrom(data)
+
+                    console.log(user)
+                    // callback(db)
+
+
+                } else {
+                    alert(data.message)
+                }
+            }
+        });
+
+    }
+
+    function getNews(id) {
+
+        $.ajax({
+            type: "POST",
+            // dataType:"json",
+            url: "/news/get/" + id,
+            // data:{"id":"value"},    //参数值
+            success: function (data) {
+                if (data.state == 0) {
+                    // top.location.replace("/html/index.html")
+                    getNewsFrom(data)
+                    $("#title").val(data.data.title)
+                    $("#content").val(data.data.content)
+                    console.log(news)
+                    getUsers(data.data.userId)
+                    // getNewsFromInput()
+                    console.log(news)
+                    //$("#username").val(user.userName)
+                    //    callback(db)
+
+                } else {
+                    alert(data.message)
+                }
+            }
+
+
+        });
+    }
+
+    function save() {
+        news = getNewsFromInput()
         console.log(news)
+
+        $.ajax({
+            type: "PUT",
+            url: "/news/" + news.id,
+            contentType: "application/json",
+            data: JSON.stringify(news),
+            success: function (data) {
+                if (data.state == 0) {
+                    top.location.replace("/html/index.html")
+                } else {
+                    alert(data.message)
+                }
+            }
+        });
+
     }
 
     function getQueryVariable(variable) {
@@ -61,17 +174,47 @@
         for (var i = 0; i < vars.length; i++) {
             var pair = vars[i].split("=");
             if (pair[0] == variable) {
-                return decodeURI(pair[1]);
+                return pair[1];
+
             }
         }
         return (false);
     }
 
+
+
+    function getNewsFromParam() {
+
+        news.id = getQueryVariable("newsId")
+
+        console.log(news)
+    }
+
+    function getUserNameById(id) {
+        //alert(id)
+
+        $.ajax("/users/" + id, function () {
+            if (data.state == 0) {
+                console.log(data)
+                user = data.data
+                syncUI()
+            } else {
+                alert(data.message)
+            }
+        })
+
+    }
+
+
     $(function () {
         getNewsFromParam()
+        getNews(news.id)
+        // getUsers(news.userId)
         syncUI()
 
+
     })
+
 
 </script>
 </body>
