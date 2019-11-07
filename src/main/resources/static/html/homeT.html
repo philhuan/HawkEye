@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hawk Eye</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" type="text/css" href="../res/layui/css/layui.css">
+    <link rel="stylesheet" type="text/css" href="../res/static/css/main.css">
+
+</head>
+<body class="micronews">
+<div class="micronews-header-wrap">
+    <div class="micronews-header w1000 layui-clear">
+        <h1 class="logo">
+            <a href="search.html">
+                <img src="../res/static/images/LOGO.png" alt="logo">
+                <span class="layui-hide">LOGO</span>
+            </a>
+        </h1>
+        <p class="nav">
+            <a href="homeT.html" class="active">主页</a>
+        </p>
+        <div class="login">
+            <a href="../loginT.html">
+                登录
+            </a>
+            <a href="../registerT.html">
+                注册
+            </a>
+        </div>
+    </div>
+</div>
+
+
+    <div class="micronews-container micronews-search-container w1000">
+        <div class="layui-fluid">
+            <h1 style="text-align:center">Hawk Eye 新闻管理系统</h1>
+<!--            <p class="num">为您找到相关新闻共<span> &nbsp;1770000&nbsp; </span>个</p>-->
+            <div class="item-list">
+                <div class="item">
+                    <h4><a href="details.html">AI人才抢夺"生猛":应届博士年薪涨到80万元 </a><span class="time">3小时前</span></h4>
+                    <p>人工智能(AI)人才薪水之高、涨幅之大,颇有令人瞠目结舌之感。
+                        一年前,针对AI领域的应届毕业生,硕士生约莫能拿到30万元的年薪,博士生则高达50万元。有企业给应届生的薪水拔高了10%~20%；也有企业上涨幅度更大，尤其是给博士生的薪水从去年的50万元年薪倏地蹿到80万元；也有准备布局AI领域的新锐企业</p>
+                </div>
+                <div id="micronews-search-test" style="text-align: center; padding:30px 0"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript" src="../res/layui/layui.js"></script>
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script>
+        layui.config({
+            base: '../res/static/js/'
+        }).use('index', function () {
+            var index = layui.index;
+            index.Page('micronews-search-test', 50)
+            index.omitted('.item p', 150)
+            index.seachBtn()
+            index.arrowutil()
+        });
+    </script>
+</body>
+</html>
